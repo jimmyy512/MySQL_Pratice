@@ -7,6 +7,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydatabase
+      TZ: Asia/Taipei
     volumes:
       - mysql_data:/var/lib/mysql
       - ./backup:/backup
@@ -14,6 +15,8 @@ services:
       - "3306:3306"
 
   phpmyadmin:
+    depends_on:
+      - mysql
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     environment:
@@ -22,16 +25,16 @@ services:
       PMA_PASSWORD: rootpassword
     ports:
       - "8080:80"
-    depends_on:
-      - mysql
+
 
   backup:
-    build: ./backup
-    container_name: backup
     depends_on:
       - mysql
+    build: ./backup
+    container_name: backup
     environment:
-      BACKUP_INTERVAL: 1 # 設置備份間隔時間，單位為秒
+      BACKUP_INTERVAL: 60 # 設置備份間隔時間，單位為秒
+      TZ: Asia/Taipei
     volumes:
       - ./backup:/backup
     entrypoint: /backup/backup.sh
