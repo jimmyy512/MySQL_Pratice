@@ -23,8 +23,11 @@ services:
       PMA_HOST: mysql
       PMA_USER: root
       PMA_PASSWORD: rootpassword
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
     ports:
       - "8080:80"
+
 
 
   backup:
@@ -33,7 +36,7 @@ services:
     build: ./backup
     container_name: backup
     environment:
-      BACKUP_INTERVAL: 60 # 設置備份間隔時間，單位為秒
+      BACKUP_INTERVAL: 3600 # 設置備份間隔時間，單位為秒
       TZ: Asia/Taipei
     volumes:
       - ./backup:/backup

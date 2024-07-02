@@ -14,7 +14,12 @@ docker-compose up --build -d
 ```
 http://localhost:8080/
 ```
-
+phpMyAdmin帳密
+```
+root
+rootpassword
+```
+詳情可以參考docker-compose.yml
 
 ## 進入 docker 容器 
 ```
