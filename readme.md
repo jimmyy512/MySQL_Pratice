@@ -17,7 +17,7 @@ http://localhost:8080/
 phpMyAdmin帳密
 ```
 root
-rootpassword
+qweasd
 ```
 詳情可以參考docker-compose.yml
 
@@ -39,10 +39,25 @@ docker exec -it mysql bash
 
 還原指定資料庫
 ``` 
-mysql -u root -prootpassword mydatabase < /backup/backup_sql/origin.sql;
+mysql -u root -pqweasd mydatabase < /backup/backup_sql/origin.sql;
 ```
 
+## 讀取 SqlTemplate 模板
+進入 mySql 容器
+```
+docker exec -it mysql bash
+```
 
+登入 mySql
+```
+mysql -u root -p
+```
+
+執行 Sql 模板
+```
+use mydatabase;
+source /SqlTemplate/test.sql;
+```
 ## 測試 Sql 語法
 創建 table
 ```
