@@ -1,46 +1,32 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  db:
+    image: mysql:latest
+    container_name: mysql-container
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: qweasd
-      MYSQL_DATABASE: mydatabase
-      TZ: Asia/Taipei
     volumes:
-      - mysql_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
       - ./backup:/backup
-      - ./SqlTemplate:/SqlTemplate
     ports:
       - "3306:3306"
 
   phpmyadmin:
-    depends_on:
-      - mysql
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    restart: always
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: db
       PMA_USER: root
-    volumes:
-      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+      PMA_PASSWORD: qweasd
     ports:
       - "8080:80"
-
-
-
-  backup:
     depends_on:
-      - mysql
-    build: ./backup
-    container_name: backup
-    environment:
-      BACKUP_INTERVAL: 3600 # 設置備份間隔時間，單位為秒
-      TZ: Asia/Taipei
+      - db
     volumes:
-      - ./backup:/backup
-    entrypoint: /backup/backup.sh
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
 
 volumes:
-  mysql_data:
+  db_data:
