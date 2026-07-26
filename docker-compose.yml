@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   mysql:
@@ -14,6 +13,8 @@ services:
       - ./SqlTemplate:/SqlTemplate
     ports:
       - "3306:3306"
+    networks:
+      - main-network
 
   phpmyadmin:
     depends_on:
@@ -27,6 +28,8 @@ services:
       - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
     ports:
       - "8080:80"
+    networks:
+      - main-network
 
 
 
@@ -41,6 +44,12 @@ services:
     volumes:
       - ./backup:/backup
     entrypoint: /backup/backup.sh
+    networks:
+      - main-network
 
 volumes:
   mysql_data:
+
+networks:
+  main-network:
+    external: true
