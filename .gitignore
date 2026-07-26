@@ -1,0 +1,6 @@
+# 由 backup.sh 定時產出的資料庫備份（27MB+，不進版控）
+backup/backup_sql/backup_*.sql
+
+# 保留已納入版控的基準備份：
+#   backup/backup_sql/origin.sql
+#   backup/backup_sql/backup_20240703_104215.sql
