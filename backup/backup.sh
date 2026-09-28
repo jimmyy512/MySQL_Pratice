@@ -12,7 +12,8 @@ echo "Current system timezone: $(date +'%Z %z')"
 
 while true; do
   TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-  mysqldump -h mysql -u root -pqweasd mydatabase > /backup/backup_sql/backup_$TIMESTAMP.sql
+  # 密碼由 compose 以 MYSQL_PWD 環境變數帶進來，不寫在腳本裡（repo 是公開的）
+  mysqldump -h mysql -u root mydatabase > /backup/backup_sql/backup_$TIMESTAMP.sql
   echo "Backup taken at $TIMESTAMP"
   sleep $BACKUP_INTERVAL
 done

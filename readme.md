@@ -17,7 +17,7 @@ http://localhost:8080/
 phpMyAdmin帳密
 ```
 root
-qweasd
+（見主機上 MySQL_Pratice/.env，不寫在 repo 裡）
 ```
 詳情可以參考docker-compose.yml
 
@@ -39,7 +39,7 @@ docker exec -it mysql bash
 
 還原指定資料庫
 ``` 
-mysql -u root -pqweasd mydatabase < /backup/backup_sql/origin.sql;
+mysql -u root -p mydatabase < /backup/backup_sql/origin.sql;
 ```
 
 ## 讀取 SqlTemplate 模板
