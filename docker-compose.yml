@@ -3,6 +3,10 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
+    # performance_schema 是給 DBA 追效能用的監控，預設開著會先吃掉約 230MB 記憶體，這台主機沒人在看它（2026-09-30 關掉）
+    command: ["mysqld", "--performance-schema=OFF"]
+    # 原本沒設重啟策略，VPS 重開機後生活獵人的資料庫不會自己起來
+    restart: unless-stopped
     environment:
       # 密碼放在同目錄不進版控的 .env，這個 repo 是公開的
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
